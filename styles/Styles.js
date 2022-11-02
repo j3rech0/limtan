@@ -144,11 +144,16 @@ export const StyledInput = styled.TextInput`
   padding: 10px;
   font-size: 16px;
   border-radius: 10px;
-  color: ${colors.secondary};
+  color: black;
   letter-spacing: 1px;
-  margin-bottom: 20px;
+  margin-top: 20px;
 `;
-
+export const StyledInputError = styled.Text`
+  font-size: 11px;
+  padding-left: 12px;
+  margin-top: 4px;
+  color: red;
+`;
 export const ModalAction = styled.TouchableOpacity`
   width: 60px;
   height: 60px;

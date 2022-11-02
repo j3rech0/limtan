@@ -7,15 +7,30 @@ import {
   ModalView,
   ModalAction,
   ModalActionGroup,
+  StyledInputError,
 } from "../styles/Styles";
+
 import DropDownPicker from "react-native-dropdown-picker";
-const Add = ({
-  modalVisible,
-  setModalVisible,
-  inputValue,
-  setInputValue,
-  handleAdd,
-}) => {
+import { Formik } from "formik";
+import * as Yup from "yup";
+
+const initialValues = {
+  accounttype: "",
+  title: "",
+  user: "",
+  pass: "",
+};
+
+const yupSchema = Yup.object().shape({
+  accounttype: Yup.string().required("Account type is required."),
+  title: Yup.string()
+    .required()
+    .min(2, "A minimum of 2 characters is required"),
+  user: Yup.string().required().min(2, "A minimum of 2 characters is required"),
+  pass: Yup.string().required("Password is required."),
+});
+
+const Add = ({ modalVisible, setModalVisible, setInputValue, handleAdd }) => {
   // Dropdown
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -30,64 +45,101 @@ const Add = ({
     setInputValue("");
   };
 
-  const handleSubmit = () => {
-    if (!inputValue) return;
-    if (!value) return;
-    handleAdd({
-      platform: value,
-      title: inputValue,
-    });
+  const handleSubmit = (values) => {
+    handleAdd(values);
     setInputValue("");
   };
 
   return (
-    <>
-      <ModalButton
-        onPress={() => {
-          setModalVisible(true);
-        }}
-      >
-        <Text>➕</Text>
-      </ModalButton>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={yupSchema}
+      onSubmit={(values) => {
+        handleSubmit(values);
+      }}
+    >
+      {(props) => (
+        <>
+          <ModalButton
+            onPress={() => {
+              setModalVisible(true);
+            }}
+          >
+            <Text>➕</Text>
+          </ModalButton>
 
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={handleClose}
-      >
-        <ModalContainer>
-          <ModalView>
-            <DropDownPicker
-              style={{ marginBottom: 20 }}
-              open={open}
-              value={value}
-              items={items}
-              setOpen={setOpen}
-              setValue={setValue}
-              setItems={setItems}
-            />
-            <StyledInput
-              placeholder="Title"
-              autofocus={true}
-              value={inputValue}
-              onChangeText={(text) => {
-                setInputValue(text);
-              }}
-              onSubmitEditing={handleSubmit}
-            />
-          </ModalView>
-          <ModalActionGroup>
-            <ModalAction onPress={handleClose}>
-              <Text>❌</Text>
-            </ModalAction>
-            <ModalAction onPress={handleSubmit}>
-              <Text>✔️</Text>
-            </ModalAction>
-          </ModalActionGroup>
-        </ModalContainer>
-      </Modal>
-    </>
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={handleClose}
+          >
+            <ModalContainer>
+              <ModalView>
+                <DropDownPicker
+                  open={open}
+                  value={value}
+                  placeholder="Account type"
+                  items={items}
+                  setValue={setValue}
+                  setOpen={setOpen}
+                  setItems={setItems}
+                  onSelectItem={(item) => {
+                    props.values.accounttype = item.label;
+                  }}
+                />
+                {props.touched.accounttype && props.errors.accounttype ? (
+                  <StyledInputError>
+                    {props.errors.accounttype}
+                  </StyledInputError>
+                ) : null}
+                <StyledInput
+                  placeholder="Title"
+                  placeholderTextColor="#ccc"
+                  autofocus={true}
+                  value={props.values.title}
+                  onChangeText={props.handleChange("title")}
+                  onBlur={props.handleBlur("title")}
+                />
+                {props.touched.title && props.errors.title ? (
+                  <StyledInputError>{props.errors.title}</StyledInputError>
+                ) : null}
+                <StyledInput
+                  placeholder="User"
+                  placeholderTextColor="#ccc"
+                  autofocus={true}
+                  value={props.values.user}
+                  onChangeText={props.handleChange("user")}
+                  onBlur={props.handleBlur("user")}
+                />
+                {props.touched.user && props.errors.user ? (
+                  <StyledInputError>{props.errors.user}</StyledInputError>
+                ) : null}
+                <StyledInput
+                  placeholder="Pass"
+                  placeholderTextColor="#ccc"
+                  autofocus={true}
+                  value={props.values.pass}
+                  onChangeText={props.handleChange("pass")}
+                  onBlur={props.handleBlur("pass")}
+                />
+                {props.touched.pass && props.errors.pass ? (
+                  <StyledInputError>{props.errors.pass}</StyledInputError>
+                ) : null}
+              </ModalView>
+              <ModalActionGroup>
+                <ModalAction onPress={handleClose}>
+                  <Text>❌</Text>
+                </ModalAction>
+                <ModalAction onPress={props.handleSubmit}>
+                  <Text>✔️</Text>
+                </ModalAction>
+              </ModalActionGroup>
+            </ModalContainer>
+          </Modal>
+        </>
+      )}
+    </Formik>
   );
 };
 

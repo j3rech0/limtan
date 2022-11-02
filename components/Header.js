@@ -5,19 +5,19 @@ import { HeaderView, HeaderTitle, HeaderButton } from "../styles/Styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Header = () => {
-  const clearAll = async () => {
-    try {
-      await AsyncStorage.clear();
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // const clearAll = async () => {
+  //   try {
+  //     await AsyncStorage.clear();
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
   return (
     <HeaderView>
-      <HeaderTitle>Accountz</HeaderTitle>
-      <HeaderButton onPress={clearAll}>
+      <HeaderTitle>Limtan</HeaderTitle>
+      {/* <HeaderButton onPress={clearAll}>
         <Text>Clear</Text>
-      </HeaderButton>
+      </HeaderButton> */}
     </HeaderView>
   );
 };
