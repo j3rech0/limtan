@@ -8,11 +8,13 @@ import {
   ModalAction,
   ModalActionGroup,
   StyledInputError,
+  ButtonText,
 } from "../styles/Styles";
-
 import DropDownPicker from "react-native-dropdown-picker";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const initialValues = {
   accounttype: "",
@@ -24,9 +26,11 @@ const initialValues = {
 const yupSchema = Yup.object().shape({
   accounttype: Yup.string().required("Account type is required."),
   title: Yup.string()
-    .required()
+    .required("Title is required.")
     .min(2, "A minimum of 2 characters is required"),
-  user: Yup.string().required().min(2, "A minimum of 2 characters is required"),
+  user: Yup.string()
+    .required("Username is required.")
+    .min(2, "A minimum of 2 characters is required"),
   pass: Yup.string().required("Password is required."),
 });
 
@@ -54,8 +58,9 @@ const Add = ({ modalVisible, setModalVisible, setInputValue, handleAdd }) => {
     <Formik
       initialValues={initialValues}
       validationSchema={yupSchema}
-      onSubmit={(values) => {
+      onSubmit={(values, { resetForm }) => {
         handleSubmit(values);
+        resetForm();
       }}
     >
       {(props) => (
@@ -64,8 +69,9 @@ const Add = ({ modalVisible, setModalVisible, setInputValue, handleAdd }) => {
             onPress={() => {
               setModalVisible(true);
             }}
+            activeOpacity={0.9}
           >
-            <Text>➕</Text>
+            <ButtonText>Add</ButtonText>
           </ModalButton>
 
           <Modal
@@ -84,9 +90,47 @@ const Add = ({ modalVisible, setModalVisible, setInputValue, handleAdd }) => {
                   setValue={setValue}
                   setOpen={setOpen}
                   setItems={setItems}
+                  closeAfterSelecting={true}
+                  style={{
+                    borderRadius: 0,
+                    borderStyle: "dashed",
+                    borderColor: "#52A8AE",
+                  }}
+                  dropDownContainerStyle={{
+                    backgroundColor: "#ffffff",
+                    borderRadius: 0,
+                    borderStyle: "dashed",
+                    borderColor: "#52A8AE",
+                  }}
+                  selectedItemContainerStyle={{
+                    backgroundColor: "#52A8AE",
+                  }}
+                  selectedItemLabelStyle={{
+                    color: "#fff",
+                  }}
                   onSelectItem={(item) => {
                     props.values.accounttype = item.label;
                   }}
+                  props={{
+                    activeOpacity: 0.8,
+                  }}
+                  placeholderStyle={{
+                    color: "#ccc",
+                  }}
+                  ArrowUpIconComponent={() => (
+                    <MaterialIcons
+                      name="keyboard-arrow-up"
+                      size={24}
+                      color="#52A8AE"
+                    />
+                  )}
+                  ArrowDownIconComponent={() => (
+                    <MaterialIcons
+                      name="keyboard-arrow-down"
+                      size={24}
+                      color="#52A8AE"
+                    />
+                  )}
                 />
                 {props.touched.accounttype && props.errors.accounttype ? (
                   <StyledInputError>
@@ -128,11 +172,22 @@ const Add = ({ modalVisible, setModalVisible, setInputValue, handleAdd }) => {
                 ) : null}
               </ModalView>
               <ModalActionGroup>
-                <ModalAction onPress={handleClose}>
-                  <Text>❌</Text>
+                <ModalAction
+                  onPress={() => {
+                    handleClose(), props.resetForm();
+                  }}
+                  activeOpacity={0.9}
+                >
+                  <Ionicons name="md-close-circle" size={32} color="#EC5252" />
+                  <Text>Cancel</Text>
                 </ModalAction>
-                <ModalAction onPress={props.handleSubmit}>
-                  <Text>✔️</Text>
+                <ModalAction onPress={props.handleSubmit} activeOpacity={0.9}>
+                  <Ionicons
+                    name="md-checkmark-circle"
+                    size={32}
+                    color="#52A8AE"
+                  />
+                  <Text>Save</Text>
                 </ModalAction>
               </ModalActionGroup>
             </ModalContainer>

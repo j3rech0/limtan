@@ -1,8 +1,9 @@
 {
   "expo": {
-    "name": "limtan",
-    "slug": "limtan",
+    "name": "Listahan",
+    "slug": "listahan",
     "owner": "j3ch",
+    "description": "Personal account management obfuscator",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

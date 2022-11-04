@@ -10,7 +10,6 @@ const Home = () => {
   const initialList = [];
 
   const [lists, setLists] = useState(initialList);
-
   // Checking localStorage value
   const getLSObject = async () => {
     const jsonValue = await AsyncStorage.getItem("accz");

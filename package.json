@@ -1,5 +1,5 @@
 {
-  "name": "limtan",
+  "name": "listahan",
   "author": "Jech <j3re.ch0@gmail.com>",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
@@ -10,21 +10,28 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo/webpack-config": "^0.17.0",
     "@react-native-async-storage/async-storage": "~1.17.3",
     "expo": "~46.0.16",
     "expo-constants": "~13.2.4",
     "expo-status-bar": "~1.4.0",
+    "expo-updates": "~0.14.6",
     "formik": "^2.2.9",
     "react": "18.0.0",
-    "react-dom": "^18.2.0",
+    "react-dom": "18.0.0",
     "react-native": "0.69.6",
     "react-native-dropdown-picker": "^5.4.2",
     "react-native-web": "~0.18.7",
     "styled-components": "^5.3.6",
     "yup": "^0.32.11"
   },
+  "resolutions": {
+    "styled-components": "^5"
+  },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "@types/styled-components": "^5.1.26",
+    "sharp-cli": "^2.1.0"
   },
   "private": true
 }

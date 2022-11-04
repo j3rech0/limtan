@@ -2,6 +2,7 @@ import React from "react";
 
 import {
   ListView,
+  ListViewNoData,
   ListText,
   ListUser,
   DelButton,
@@ -39,9 +40,9 @@ const List = ({ lists, setLists }) => {
   return (
     <>
       {lists.length == 0 && (
-        <ListView>
+        <ListViewNoData>
           <Text>No data.</Text>
-        </ListView>
+        </ListViewNoData>
       )}
       <FlatList
         data={lists}
@@ -50,7 +51,7 @@ const List = ({ lists, setLists }) => {
             <ListView>
               <>
                 <ListContent>
-                  <ListText>{data.item.platform}</ListText>
+                  <ListText>{data.item.accounttype}</ListText>
                   <ListText>{data.item.title}</ListText>
                   <ListUser>
                     {data.item.user}:{data.item.pass}
