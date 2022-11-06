@@ -81,6 +81,7 @@ const Add = ({ modalVisible, setModalVisible, setInputValue, handleAdd }) => {
             onRequestClose={handleClose}
           >
             <ModalContainer>
+              <Text>Data will be obfuscated and saved locally.</Text>
               <ModalView>
                 <DropDownPicker
                   open={open}
@@ -138,7 +139,7 @@ const Add = ({ modalVisible, setModalVisible, setInputValue, handleAdd }) => {
                   </StyledInputError>
                 ) : null}
                 <StyledInput
-                  placeholder="Title"
+                  placeholder="Website name, Email platform etc."
                   placeholderTextColor="#ccc"
                   autofocus={true}
                   value={props.values.title}
@@ -177,17 +178,18 @@ const Add = ({ modalVisible, setModalVisible, setInputValue, handleAdd }) => {
                     handleClose(), props.resetForm();
                   }}
                   activeOpacity={0.9}
+                  style={{ backgroundColor: "#DB4444" }}
                 >
-                  <Ionicons name="md-close-circle" size={32} color="#EC5252" />
-                  <Text>Cancel</Text>
+                  <Ionicons name="md-close-circle" size={28} color="#ffffff" />
+                  <Text style={{ color: "white", marginLeft: 10 }}>Cancel</Text>
                 </ModalAction>
                 <ModalAction onPress={props.handleSubmit} activeOpacity={0.9}>
                   <Ionicons
                     name="md-checkmark-circle"
-                    size={32}
-                    color="#52A8AE"
+                    size={28}
+                    color="#ffffff"
                   />
-                  <Text>Save</Text>
+                  <Text style={{ color: "white", marginLeft: 10 }}>Save</Text>
                 </ModalAction>
               </ModalActionGroup>
             </ModalContainer>

@@ -10,7 +10,8 @@ import {
 } from "../styles/Styles";
 
 import { FlatList, Text } from "react-native";
-
+import { MaterialIcons } from "@expo/vector-icons";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const List = ({ lists, setLists }) => {
@@ -37,6 +38,34 @@ const List = ({ lists, setLists }) => {
     setLists(newLists);
   };
 
+  // Capitalize first letter for data.user
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
+  // Replace all vowels
+  const replaceVowels = (vowels) => {
+    String.prototype.replaceAll = function (find, replace) {
+      var str = this;
+      return str.replace(
+        new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "g"),
+        replace
+      );
+    };
+    String.prototype.replaceAt = function (index, replacement) {
+      return (
+        this.substring(0, index) +
+        replacement +
+        this.substring(index + replacement.length)
+      );
+    };
+    vowels = vowels.replaceAll("a", "4");
+    vowels = vowels.replaceAll("e", "3");
+    vowels = vowels.replaceAll("i", "1");
+    vowels = vowels.replaceAll("o", "0");
+    return vowels.replaceAt(2, "...");
+  };
+
   return (
     <>
       {lists.length == 0 && (
@@ -51,18 +80,28 @@ const List = ({ lists, setLists }) => {
             <ListView>
               <>
                 <ListContent>
-                  <ListText>{data.item.accounttype}</ListText>
-                  <ListText>{data.item.title}</ListText>
+                  {/* <ListText>{data.item.accounttype}</ListText> */}
+                  <ListText>{data.item.title.toLowerCase()}</ListText>
                   <ListUser>
-                    {data.item.user}:{data.item.pass}
+                    {replaceVowels(data.item.user)}:
+                    {replaceVowels(capitalizeFirstLetter(data.item.pass))}
                   </ListUser>
                 </ListContent>
                 <DelButton
                   onPress={() => {
+                    console.log("show");
+                  }}
+                  activeOpacity={0.8}
+                >
+                  <Ionicons name="eye" size={24} color="#75B9BE" />
+                </DelButton>
+                <DelButton
+                  onPress={() => {
                     handleDel(data.index);
                   }}
+                  activeOpacity={0.8}
                 >
-                  <Text>🗑️</Text>
+                  <MaterialIcons name="delete" size={28} color="#DB4444" />
                 </DelButton>
               </>
             </ListView>

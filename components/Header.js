@@ -1,5 +1,5 @@
 import React from "react";
-import { Image } from "react-native";
+import { Image, PixelRatio } from "react-native";
 import { HeaderView } from "../styles/Styles";
 import Logo from "../assets/logo-head.png";
 
@@ -9,9 +9,8 @@ const Header = () => {
       <Image
         source={Logo}
         style={{
-          width: 120,
-          height: 18,
-          resizeMode: "stretch",
+          width: PixelRatio.getPixelSizeForLayoutSize(30),
+          height: PixelRatio.getPixelSizeForLayoutSize(30),
         }}
       />
     </HeaderView>
