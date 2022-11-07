@@ -81,7 +81,7 @@ const Add = ({ modalVisible, setModalVisible, setInputValue, handleAdd }) => {
             onRequestClose={handleClose}
           >
             <ModalContainer>
-              <Text>Data will be obfuscated and saved locally.</Text>
+              <Text>Data will be saved locally.</Text>
               <ModalView>
                 <DropDownPicker
                   open={open}

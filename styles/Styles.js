@@ -116,10 +116,11 @@ export const ModalButton = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   align-self: center;
-  position: absolute;
   bottom: 25px;
   margin-left: 20px;
   margin-right: 20px;
+  margin-top: 20px;
+  margin-bottom: 0;
 `;
 
 export const ButtonText = styled.Text`

@@ -12,9 +12,17 @@ import {
 import { FlatList, Text } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useFonts, Inter_400Regular } from "@expo-google-fonts/inter";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const List = ({ lists, setLists }) => {
+  // fonts
+  let [fontsLoaded] = useFonts({
+    Inter_400Regular,
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
   // Check localStorage and update its value
   const getLSObject = async (item) => {
     try {
@@ -70,10 +78,11 @@ const List = ({ lists, setLists }) => {
     <>
       {lists.length == 0 && (
         <ListViewNoData>
-          <Text>No data.</Text>
+          <Text style={{ fontFamily: "Inter_400Regular" }}>No data!!!</Text>
         </ListViewNoData>
       )}
       <FlatList
+        style={{ marginBottom: 20 }}
         data={lists}
         renderItem={(data) => {
           return (
@@ -87,14 +96,6 @@ const List = ({ lists, setLists }) => {
                     {replaceVowels(capitalizeFirstLetter(data.item.pass))}
                   </ListUser>
                 </ListContent>
-                <DelButton
-                  onPress={() => {
-                    console.log("show");
-                  }}
-                  activeOpacity={0.8}
-                >
-                  <Ionicons name="eye" size={24} color="#75B9BE" />
-                </DelButton>
                 <DelButton
                   onPress={() => {
                     handleDel(data.index);
