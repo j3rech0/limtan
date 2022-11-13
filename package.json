@@ -22,9 +22,12 @@
     "react": "18.0.0",
     "react-dom": "18.0.0",
     "react-native": "0.69.6",
+    "react-native-base64": "^0.2.1",
     "react-native-dropdown-picker": "^5.4.2",
+    "react-native-swipe-list-view": "^3.2.9",
     "react-native-web": "~0.18.7",
     "styled-components": "^5.3.6",
+    "utf8": "^3.0.0",
     "yup": "^0.32.11"
   },
   "resolutions": {
@@ -33,7 +36,8 @@
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@types/styled-components": "^5.1.26",
-    "sharp-cli": "^2.1.0"
+    "sharp-cli": "^2.1.0",
+    "shortid": "^2.2.16"
   },
   "private": true
 }

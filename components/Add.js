@@ -16,7 +16,9 @@ import * as Yup from "yup";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { MaterialIcons } from "@expo/vector-icons";
 
+import shortid from "shortid";
 const initialValues = {
+  id: shortid.generate(),
   accounttype: "",
   title: "",
   user: "",
@@ -51,6 +53,7 @@ const Add = ({ modalVisible, setModalVisible, setInputValue, handleAdd }) => {
 
   const handleSubmit = (values) => {
     handleAdd(values);
+
     setInputValue("");
   };
 

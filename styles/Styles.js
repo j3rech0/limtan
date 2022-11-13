@@ -29,6 +29,15 @@ export const HeaderView = styled.View`
   padding-vertical: 40px;
 `;
 
+export const RowBack = styled.View`
+  align-items: "center";
+  background-color: "#DDD";
+  flex: 1;
+  flex-direction: "row";
+  justify-content: "space-between";
+  padding-left: 15px;
+`;
+
 export const HeaderButton = styled.TouchableOpacity`
   font-weight: bold;
   color: ${colors.tertiary};
@@ -56,9 +65,9 @@ export const ListViewNoData = styled.TouchableHighlight`
 `;
 
 export const ListView = styled.TouchableHighlight`
-  background-color: transparent;
+  background-color: white;
   width: 100%;
-  padding: 15px 0 4px;
+  padding: 15px 0 8px;
   justify-content: space-around;
   margin-bottom: 15px;
   display: flex;
@@ -82,8 +91,17 @@ export const ListViewHidden = styled.View`
 `;
 
 export const DelButton = styled.TouchableOpacity`
-  width: 55px;
-  align-items: center;
+  width: 25px;
+  align-self: flex-end;
+  margin-top: 16px;
+`;
+
+export const CloseButton = styled.TouchableOpacity`
+  align-self: flex-start;
+  display: flex;
+  flex-direction: row-reverse;
+  margin-top: -25px;
+  padding: 1px;
 `;
 
 export const ListText = styled.Text`
@@ -93,6 +111,12 @@ export const ListText = styled.Text`
   flex: 1 70%;
   position: absolute;
   bottom: -25px;
+`;
+
+export const HideText = styled.Text`
+  margin-left: 8px;
+  font-size: 14px;
+  letter-spacing: 1px;
 `;
 
 export const ListUser = styled.Text`

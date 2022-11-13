@@ -1,7 +1,7 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
 
-import Home from "./components/Home";
+import Home from "./screens/Home";
 
 import { Container } from "./styles/Styles";
 

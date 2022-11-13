@@ -7,13 +7,17 @@ import {
   ListUser,
   DelButton,
   ListContent,
+  CloseButton,
+  HideText,
 } from "../styles/Styles";
 
-import { FlatList, Text } from "react-native";
+import { Text } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import { useFonts, Inter_400Regular } from "@expo-google-fonts/inter";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import { SwipeListView } from "react-native-swipe-list-view";
+import base64 from "react-native-base64";
 
 const List = ({ lists, setLists }) => {
   // fonts
@@ -23,6 +27,7 @@ const List = ({ lists, setLists }) => {
   if (!fontsLoaded) {
     return null;
   }
+
   // Check localStorage and update its value
   const getLSObject = async (item) => {
     try {
@@ -54,7 +59,7 @@ const List = ({ lists, setLists }) => {
   // Replace all vowels
   const replaceVowels = (vowels) => {
     String.prototype.replaceAll = function (find, replace) {
-      var str = this;
+      const str = this;
       return str.replace(
         new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "g"),
         replace
@@ -73,6 +78,13 @@ const List = ({ lists, setLists }) => {
     vowels = vowels.replaceAll("o", "0");
     return vowels.replaceAt(2, "...");
   };
+  // Swipe
+
+  const closeRow = (rowMap, rowKey) => {
+    if (rowMap[rowKey]) {
+      rowMap[rowKey].closeRow();
+    }
+  };
 
   return (
     <>
@@ -81,36 +93,58 @@ const List = ({ lists, setLists }) => {
           <Text style={{ fontFamily: "Inter_400Regular" }}>No data!!!</Text>
         </ListViewNoData>
       )}
-      <FlatList
+      <SwipeListView
         style={{ marginBottom: 20 }}
         data={lists}
+        keyExtractor={(item) => String(item.id)}
+        leftOpenValue={250}
+        rightOpenValue={-35}
+        previewOpenValue={-35}
+        previewOpenDelay={2000}
+        showsVerticalScrollIndicator={false}
         renderItem={(data) => {
           return (
-            <ListView>
+            <ListView onPress={() => {}} underlayColor="#ffffff">
               <>
                 <ListContent>
-                  {/* <ListText>{data.item.accounttype}</ListText> */}
                   <ListText>{data.item.title.toLowerCase()}</ListText>
                   <ListUser>
-                    {replaceVowels(data.item.user)}:
-                    {replaceVowels(capitalizeFirstLetter(data.item.pass))}
+                    {replaceVowels(base64.encode(data.item.user))}:
+                    {replaceVowels(
+                      capitalizeFirstLetter(base64.encode(data.item.pass))
+                    )}
                   </ListUser>
                 </ListContent>
-                <DelButton
-                  onPress={() => {
-                    handleDel(data.index);
-                  }}
-                  activeOpacity={0.8}
-                >
-                  <MaterialIcons name="delete" size={28} color="#DB4444" />
-                </DelButton>
               </>
             </ListView>
           );
         }}
+        renderHiddenItem={(data, rowMap) => (
+          <>
+            <DelButton
+              onPress={() => {
+                handleDel(data.index);
+              }}
+              activeOpacity={0.8}
+            >
+              <MaterialIcons name="delete" size={23} color="#DB4444" />
+            </DelButton>
+            <CloseButton
+              onPress={() => {
+                closeRow(rowMap, data.item.id);
+              }}
+              activeOpacity={0.8}
+            >
+              <HideText style={{ fontFamily: "Inter_400Regular" }}>
+                {replaceVowels(data.item.user)}:
+                {replaceVowels(capitalizeFirstLetter(data.item.pass))}
+              </HideText>
+              <MaterialIcons name="close" size={23} color="#52A8AE" />
+            </CloseButton>
+          </>
+        )}
       />
     </>
   );
 };
-
 export default List;

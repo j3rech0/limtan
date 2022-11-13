@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import Header from "./Header";
-import List from "./List";
-import Add from "./Add";
+import Header from "../components/Header";
+import List from "../components/List";
+import Add from "../components/Add";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 const Home = () => {
@@ -10,13 +10,13 @@ const Home = () => {
   const initialList = [];
 
   const [lists, setLists] = useState(initialList);
+
   // Checking localStorage value
   const getLSObject = async () => {
     const jsonValue = await AsyncStorage.getItem("accz");
     if (!jsonValue) return;
     setLists(JSON.parse(jsonValue));
   };
-
   // Initiate Modal
   const [modalVisible, setModalVisible] = useState(false);
   // Initiate inputs
@@ -41,6 +41,8 @@ const Home = () => {
       console.log(e);
     }
   };
+
+  // Edit
 
   useEffect(() => {
     getLSObject();
